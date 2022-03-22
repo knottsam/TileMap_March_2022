@@ -17,7 +17,7 @@ namespace TileMap_March_2022
         public static char[,] ReadFile(string inFileName)
         {
             //Use a streamreader to read the file and pass it the filepath
-            StreamReader sRead = new StreamReader(@"\Content\" + inFileName + ".txt");
+            StreamReader sRead = new StreamReader(inFileName + ".txt");
             //String to store each line from the .txt file
             string line = "";
             //Create the temporary map size (This MUST match the size of out .txt file - so 10x10 today)
@@ -50,6 +50,8 @@ namespace TileMap_March_2022
             sRead.Close(); //Make sure you close the streamReader
             return tileArray;//Return the array to the calling class
         }
+
+        
 
     }
 }

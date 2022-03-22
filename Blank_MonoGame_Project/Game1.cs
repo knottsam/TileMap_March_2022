@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.IO;
 
 namespace TileMap_March_2022
 {
@@ -13,6 +14,10 @@ namespace TileMap_March_2022
         private Tile[,] tileArray;
         //The second array will hold the values of the tiles we read in from the .txt file
         private char[,] tileValuesArray;
+        //Declare all necessary textures:
+        private Texture2D coalTexture, dirtTexture, glassTexture, goldTexture, grassTexture, leavesTexture, redstoneTexture, sandTexture, stoneTexture, tntTexture, waterTexture, woodTexture;
+        //Create a constant tile size to save time later
+        private const int TILE_SIZE = 80;
 
         public Game1()
         {
@@ -28,6 +33,10 @@ namespace TileMap_March_2022
         {
             // TODO: Add your initialization logic here
 
+            //Initialise the tileArray
+            tileArray = new Tile[MapReader.MapSize, MapReader.MapSize];
+            tileValuesArray = MapReader.ReadFile(@"C:\Users\sknott\OneDrive - St Marys College\Visual Studio 2017\Projects\MonoGame\Blank_MonoGame_Project\Blank_MonoGame_Project\Content\MineCraft_Map");//Read the file and store into the array of values
+
             base.Initialize();
         }
 
@@ -36,8 +45,86 @@ namespace TileMap_March_2022
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
+
+            //Load all textures
+            coalTexture = Content.Load<Texture2D>("Coal");
+            dirtTexture = Content.Load<Texture2D>("Dirt");
+            glassTexture = Content.Load<Texture2D>("Glass");
+            goldTexture = Content.Load<Texture2D>("Gold");
+            grassTexture = Content.Load<Texture2D>("Grass");
+            leavesTexture = Content.Load<Texture2D>("Leaves");
+            redstoneTexture = Content.Load<Texture2D>("Redstone");
+            sandTexture = Content.Load<Texture2D>("Sand");
+            stoneTexture = Content.Load<Texture2D>("Stone");
+            tntTexture = Content.Load<Texture2D>("Tnt");
+            waterTexture = Content.Load<Texture2D>("Water");
+            woodTexture = Content.Load<Texture2D>("wood");
+
+            //Create the map by calling the method we created:
+            CreateMap();
         }
 
+        public void CreateMap()
+        {
+            Vector2 tempPosition;
+
+            for (int i = 0; i <= tileValuesArray.GetUpperBound(0); i++)
+            {
+                for (int j = 0; j <= tileValuesArray.GetUpperBound(1); j++)
+                {
+                    tempPosition = new Vector2(TILE_SIZE * i, TILE_SIZE * j);
+
+                    if (tileValuesArray[i, j] == '0')
+                    {
+                        tileArray[i, j] = new Tile(coalTexture, tempPosition, new Vector2(TILE_SIZE, TILE_SIZE), Color.White);
+                    }
+                    else if (tileValuesArray[i, j] == '1')
+                    {
+                        tileArray[i, j] = new Tile(dirtTexture, tempPosition, new Vector2(TILE_SIZE, TILE_SIZE), Color.White);
+                    }
+                    else if (tileValuesArray[i, j] == '2')
+                    {
+                        tileArray[i, j] = new Tile(glassTexture, tempPosition, new Vector2(TILE_SIZE, TILE_SIZE), Color.White);
+                    }
+                    else if (tileValuesArray[i, j] == '3')
+                    {
+                        tileArray[i, j] = new Tile(redstoneTexture, tempPosition, new Vector2(TILE_SIZE, TILE_SIZE), Color.White);
+                    }
+                    else if (tileValuesArray[i, j] == '4')
+                    {
+                        tileArray[i, j] = new Tile(sandTexture, tempPosition, new Vector2(TILE_SIZE, TILE_SIZE), Color.White);
+                    }
+                    else if (tileValuesArray[i, j] == '5')
+                    {
+                        tileArray[i, j] = new Tile(stoneTexture, tempPosition, new Vector2(TILE_SIZE, TILE_SIZE), Color.White);
+                    }
+                    else if (tileValuesArray[i, j] == '6')
+                    {
+                        tileArray[i, j] = new Tile(goldTexture, tempPosition, new Vector2(TILE_SIZE, TILE_SIZE), Color.White);
+                    }
+                    else if (tileValuesArray[i, j] == '7')
+                    {
+                        tileArray[i, j] = new Tile(grassTexture, tempPosition, new Vector2(TILE_SIZE, TILE_SIZE), Color.White);
+                    }
+                    else if (tileValuesArray[i, j] == '8')
+                    {
+                        tileArray[i, j] = new Tile(leavesTexture, tempPosition, new Vector2(TILE_SIZE, TILE_SIZE), Color.White);
+                    }
+                    else if (tileValuesArray[i, j] == '9')
+                    {
+                        tileArray[i, j] = new Tile(tntTexture, tempPosition, new Vector2(TILE_SIZE, TILE_SIZE), Color.White);
+                    }
+                    else if (tileValuesArray[i, j] == 'A')
+                    {
+                        tileArray[i, j] = new Tile(waterTexture, tempPosition, new Vector2(TILE_SIZE, TILE_SIZE), Color.White);
+                    }
+                    else if (tileValuesArray[i, j] == 'B')
+                    {
+                        tileArray[i, j] = new Tile(woodTexture, tempPosition, new Vector2(TILE_SIZE, TILE_SIZE), Color.White);
+                    }
+                }
+            }
+        }
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
@@ -53,6 +140,15 @@ namespace TileMap_March_2022
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
+
+            _spriteBatch.Begin();
+
+            foreach (Tile t in tileArray)
+            {
+                t.Draw(_spriteBatch);
+            }
+
+            _spriteBatch.End();
 
             base.Draw(gameTime);
         }
