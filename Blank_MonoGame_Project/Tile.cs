@@ -5,9 +5,6 @@ namespace TileMap_March_2022
 {
     class Tile : Sprite
     {
-        /// <summary>
-        /// Empty constructor - just in case! :)
-        /// </summary>
         public Tile()
         { 
         }
@@ -17,11 +14,7 @@ namespace TileMap_March_2022
         {
         }
 
-        /// <summary>
-        /// Allows us to get the position of the object if necessary
-        /// </summary>
-        /// <returns></returns>
-        public Vector2 GetTilePosition {get; set;}
+        public Vector2 GetTilePosition { get; set; }
 
         public string TileType { get; set; }
     }

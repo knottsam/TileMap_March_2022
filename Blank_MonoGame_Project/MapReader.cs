@@ -25,7 +25,7 @@ namespace TileMap_March_2022
             //A counter to help us keep track of where we are in the line of the text file (which character in the line)
             int counter = 0;
 
-            //Iterate throught
+            //Iterate through
             do
             {
                 //Grab a line of text and store into the variable

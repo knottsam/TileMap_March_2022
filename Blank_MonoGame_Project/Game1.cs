@@ -24,8 +24,10 @@ namespace TileMap_March_2022
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+            //Set the window width and height to 800px
             _graphics.PreferredBackBufferWidth = 800;
             _graphics.PreferredBackBufferHeight = 800;
+            //Set the map size to 10 so that we can have a 10x10 grid of tiles
             MapReader.MapSize = 10;
         }
 
@@ -35,8 +37,7 @@ namespace TileMap_March_2022
 
             //Initialise the tileArray
             tileArray = new Tile[MapReader.MapSize, MapReader.MapSize];
-            tileValuesArray = MapReader.ReadFile(@"C:\Users\sknott\OneDrive - St Marys College\Visual Studio 2017\Projects\MonoGame\Blank_MonoGame_Project\Blank_MonoGame_Project\Content\MineCraft_Map");//Read the file and store into the array of values
-
+            tileValuesArray = MapReader.ReadFile(Directory.GetCurrentDirectory() + @"\Content\MineCraft_Map");//Read the file and store into the array of values
             base.Initialize();
         }
 
@@ -64,6 +65,11 @@ namespace TileMap_March_2022
             CreateMap();
         }
 
+        /// <summary>
+        /// Checks through the tilevalues array and assigns each value a texture which is drawn using a foreach loop
+        /// Uses the Tile object to create a new tile based upon this texture - the tempPosition is a generic position
+        /// to allow the re-use of the variable meaning that I don't have to create one for every texture every iteration
+        /// </summary>
         public void CreateMap()
         {
             Vector2 tempPosition;
@@ -125,9 +131,10 @@ namespace TileMap_March_2022
                 }
             }
         }
+
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
             // TODO: Add your update logic here
