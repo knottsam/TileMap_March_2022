@@ -73,8 +73,9 @@ namespace TileMap_March_2022
         public void CreateMap()
         {
             Vector2 tempPosition;
+            Vector2 size = new Vector2(TILE_SIZE, TILE_SIZE);
 
-            for (int i = 0; i <= tileValuesArray.GetUpperBound(0); i++)
+            for (int i = 0; i<= tileValuesArray.GetUpperBound(0); i++)
             {
                 for (int j = 0; j <= tileValuesArray.GetUpperBound(1); j++)
                 {
@@ -130,6 +131,11 @@ namespace TileMap_March_2022
                     }
                 }
             }
+
+            #region If statements:
+            
+
+            #endregion
         }
 
         protected override void Update(GameTime gameTime)
